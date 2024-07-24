@@ -1,1 +1,1 @@
-# doctorBookingApp
+# doctor-booking-app
