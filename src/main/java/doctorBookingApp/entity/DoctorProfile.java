@@ -2,11 +2,13 @@ package doctorBookingApp.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
-
+@Accessors
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,9 +26,10 @@ public class DoctorProfile {
         @Column(length = 50)
         private String lastName;
 
-
-//        @Column(length = 50)
-//        private String department;
+        @ManyToOne
+        @Column(length = 50)
+        @JoinColumn(name = "department_id", nullable = false)
+        private Department department_id;
 
         @Column(length = 255)
         private String specialization;
@@ -35,14 +38,12 @@ public class DoctorProfile {
         private Integer experienceYears;
 
         @Column(length = 50)
-        private String languageLevel;
+        private Integer review_id;
 
-        @Column(nullable = false)
-        private String schedul;
+        public void setDepartment(Department department) {
+                this.department_id = department;
+        }
 
-
-        //ОТЗІВВІ
-
-
-
+        public Department getDepartment() {
+                return department_id; }
 }

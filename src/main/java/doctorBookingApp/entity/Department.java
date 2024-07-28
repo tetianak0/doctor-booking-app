@@ -3,6 +3,9 @@ package doctorBookingApp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
+
 @Getter
 @Setter
 @ToString
@@ -11,12 +14,15 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "departments")
-public class Department {
+public final class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(length = 50)
     private String titleDepartment;
+
+    @OneToMany(mappedBy = "department")
+    private List <Department> departments;
 }
