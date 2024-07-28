@@ -1,7 +1,7 @@
 package doctorBookingApp.dto;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import javax.validation.constraints.*;
 
 @Getter
 @Setter
