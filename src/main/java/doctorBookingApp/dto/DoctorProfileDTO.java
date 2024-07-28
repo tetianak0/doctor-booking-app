@@ -24,7 +24,7 @@ public class DoctorProfileDTO {
 
     // Обязательное поле. ID департамента не может быть null
     @NotNull(message = "ID департамента обязательно для заполнения")
-    private Long departmentId;
+    private Long department_id;
 
     // Обязательное поле. Специализация не может быть пустой и должна содержать не более 255 символов
     @NotBlank(message = "Специализация обязательна для заполнения")
@@ -38,5 +38,6 @@ public class DoctorProfileDTO {
     private Integer experienceYears;
 
     // Необязательное поле. Отзывы
-    private Integer reviewId; // Это поле необязательно, поэтому аннотации валидации нет
+    private Integer review_id; // Это поле необязательно, поэтому аннотации валидации нет
+
 }
