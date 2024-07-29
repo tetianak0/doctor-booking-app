@@ -5,85 +5,77 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 		https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-    
-    <changeSet id="create.table.role" author="author">
-        <createTable tableName="role">
+
+    <changeSet id="create.table.doctor_profile" author="author">
+        <createTable tableName="doctor_profile">
             <column name="id" type="INT" autoIncrement="true">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true" nullable="true"/>
             </column>
-           <column name="role" type="VARCHAR(255)"> </column>
+
+            <column name="first_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="department_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="specialization" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="experience_years" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="review_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+
         </createTable>
     </changeSet>
 
-    <changeSet id="insert.default.roles" author="author">
-        <insert tableName="role">
-            <column name="name" value="Admin">
-            </column>
-        </insert>
-        <insert tableName="role">
-            <column name="name" value="User"></column>
-        </insert>
-    </changeSet>
 
-    <changeSet id="create.table.user" author="author">
-        <createTable tableName="user">
+
+    <changeSet id="create.table.department" author="author">
+        <createTable tableName="departments">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="true" />
             </column>
 
-            <column name="user_name" type="VARCHAR(255)" >
+            <column name="title_department" type="VARCHAR(255)" >
                 <constraints nullable="false"/>
             </column>
 
-            <column name="birthday" type="VARCHAR(255)" >
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="phone_number" type="VARCHAR(255)" >
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="email" type="VARCHAR(255)" >
-                <constraints nullable="true"/>
-            </column>
-
-            <column name="password" type="VARCHAR(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="role_id" type="INT" >
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="role_id" constraintName="fk_manager_role_id"
-                                 referencedTableName="role"
+        <addForeignKeyConstraint baseTableName="doctor_profile" baseColumnNames="department_id" constraintName="fk_manager_department_id"
+                                 referencedTableName="departments"
                                  referencedColumnNames="id" />
-
     </changeSet>
 
 
-    <changeSet id="insert.default.user" author="author">
-        <insert tableName="user">
-            <column name="user_name" value="Name1" />
-            <column name="surname" value="Surname1" />
-            <column name="birthday" value="01.01.2000"/>
-            <column name="phone_number" value="12345678"/>
-            <column name="email" value="user@company.com" />
-            <column name="password" value="root12345"/>
-            <column name="role_id" value="2" />
+    <changeSet id="insert.default.doctor_profile" author="author">
+        <insert tableName="doctor_profile">
+            <column name="first_name" value="doctorName1" />
+            <column name="last_name" value="doctorLastname1" />
+            <column name="department_id" value="1"/>
+            <column name="specialization" value="Cardiology"/>
+            <column name="experience_years" value="10" />
+            <column name="review_id" value="1"/>
         </insert>
     </changeSet>
 
-    <changeSet id="insert.default.admin" author="author">
-        <insert tableName="user">
-            <column name="name" value="Admin"/>
-            <column name="surname" value="Adminovich"/>
-            <column name="email" value="admin@company.com"/>
-            <column name="password" value="root12345"/>
-            <column name="role_id" value="1"/>
+    <changeSet id="insert.default.department" author="author">
+        <insert tableName="departments">
+            <column name="title_department" value="Cardiology_department"/>
         </insert>
     </changeSet>
+
 
     
 </databaseChangeLog>

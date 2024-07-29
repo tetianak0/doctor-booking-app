@@ -1,5 +1,6 @@
 package doctorBookingApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public final class Department {
     @Column(length = 50)
     private String titleDepartment;
 
-    @OneToMany(mappedBy = "department")
-    private List <Department> departments;
+    //@JsonIgnore
+    //@OneToMany(mappedBy = "department")
+   // private List <Department> departments;
 }
