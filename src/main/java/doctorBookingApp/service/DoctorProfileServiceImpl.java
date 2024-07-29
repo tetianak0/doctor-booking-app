@@ -7,24 +7,76 @@ import doctorBookingApp.repository.DepartmentRepository;
 import doctorBookingApp.repository.DoctorProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class DoctorProfileServiceImpl implements DoctorProfileService {
-    @Autowired
-    private DoctorProfileRepository doctorProfileRepository;
+
+    private final DoctorProfileRepository doctorProfileRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    public DoctorProfileServiceImpl(DoctorProfileRepository doctorProfileRepository, DepartmentRepository departmentRepository) {
+        this.doctorProfileRepository = doctorProfileRepository;
+        this.departmentRepository = departmentRepository;
+    }
 
+    @Override
     public DoctorProfileDTO addDoctorProfile(DoctorProfileDTO doctorProfileDTO) {
+        DoctorProfile doctorProfile = convertToEntity(doctorProfileDTO);
+        doctorProfile = doctorProfileRepository.save(doctorProfile);
+        return convertToDTO(doctorProfile);
+    }
+
+    @Override
+    public DoctorProfileDTO updateDoctorProfile(Long id, DoctorProfileDTO doctorProfileDTO) {
+        DoctorProfile existingDoctorProfile = doctorProfileRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("DoctorProfile not found"));
+        existingDoctorProfile.setFirstName(doctorProfileDTO.getFirstName());
+        existingDoctorProfile.setLastName(doctorProfileDTO.getLastName());
         Department department = departmentRepository.findById(doctorProfileDTO.getDepartment_id())
-                .orElseThrow(() -> new IllegalArgumentException("Department not found"));
-        DoctorProfile doctorProfile = DoctorProfile.builder()
+                .orElseThrow(() -> new RuntimeException("Department not found"));
+        existingDoctorProfile.setDepartment(department);
+        existingDoctorProfile.setSpecialization(doctorProfileDTO.getSpecialization());
+        existingDoctorProfile.setExperienceYears(doctorProfileDTO.getExperienceYears());
+        existingDoctorProfile.setReview_id(doctorProfileDTO.getReview_id());
+        existingDoctorProfile = doctorProfileRepository.save(existingDoctorProfile);
+        return convertToDTO(existingDoctorProfile);
+    }
+
+    @Override
+    public void deleteDoctorProfile(Long id) {
+        doctorProfileRepository.deleteById(id);
+    }
+
+    @Override
+    public DoctorProfileDTO getDoctorProfileById(Long id) {
+        DoctorProfile doctorProfile = doctorProfileRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("DoctorProfile not found"));
+        return convertToDTO(doctorProfile);
+    }
+
+    @Override
+    public List<DoctorProfileDTO> getAllDoctorProfiles() {
+        return doctorProfileRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DoctorProfileDTO> findByDepartmentId(Long departmentId) {
+        return doctorProfileRepository.findByDepartmentId(departmentId).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private DoctorProfile convertToEntity(DoctorProfileDTO doctorProfileDTO) {
+        Department department = departmentRepository.findById(doctorProfileDTO.getDepartment_id())
+                .orElseThrow(() -> new RuntimeException("Department not found"));
+
+        return DoctorProfile.builder()
                 .firstName(doctorProfileDTO.getFirstName())
                 .lastName(doctorProfileDTO.getLastName())
                 .department_id(department)
@@ -32,42 +84,9 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
                 .experienceYears(doctorProfileDTO.getExperienceYears())
                 .review_id(doctorProfileDTO.getReview_id())
                 .build();
-        doctorProfile = doctorProfileRepository.save(doctorProfile);
-        return toDTO(doctorProfile);
     }
 
-    public DoctorProfileDTO updateDoctorProfile(Long id, DoctorProfileDTO doctorProfileDTO) {
-        DoctorProfile doctorProfile = doctorProfileRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Doctor profile not found"));
-        Department department = departmentRepository.findById(doctorProfileDTO.getDepartment_id())
-                .orElseThrow(() -> new IllegalArgumentException("Department not found"));
-        doctorProfile.setFirstName(doctorProfileDTO.getFirstName());
-        doctorProfile.setLastName(doctorProfileDTO.getLastName());
-        doctorProfile.setDepartment(department);
-        doctorProfile.setSpecialization(doctorProfileDTO.getSpecialization());
-        doctorProfile.setExperienceYears(doctorProfileDTO.getExperienceYears());
-        doctorProfile.setReview_id(doctorProfileDTO.getReview_id());
-        doctorProfile = doctorProfileRepository.save(doctorProfile);
-        return toDTO(doctorProfile);
-    }
-
-    public void deleteDoctorProfile(Long id) {
-        doctorProfileRepository.deleteById(id);
-    }
-
-    public List<DoctorProfileDTO> getAllDoctorProfiles() {
-        return doctorProfileRepository.findAll().stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    public DoctorProfileDTO getDoctorProfileById(Long id) {
-        DoctorProfile doctorProfile = doctorProfileRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Doctor profile not found"));
-        return toDTO(doctorProfile);
-    }
-
-    private DoctorProfileDTO toDTO(DoctorProfile doctorProfile) {
+    private DoctorProfileDTO convertToDTO(DoctorProfile doctorProfile) {
         return DoctorProfileDTO.builder()
                 .id(doctorProfile.getId())
                 .firstName(doctorProfile.getFirstName())

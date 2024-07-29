@@ -10,4 +10,5 @@ public interface DoctorProfileService {
     void deleteDoctorProfile(Long id);
     DoctorProfileDTO getDoctorProfileById(Long id);
     List<DoctorProfileDTO> getAllDoctorProfiles();
+    List<DoctorProfileDTO> findByDepartmentId(Long departmentId);
 }
