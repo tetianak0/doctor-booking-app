@@ -48,4 +48,9 @@ public class DoctorProfileController {
     public ResponseEntity<List<DoctorProfileDTO>> getAllDoctorProfiles() {
         return ResponseEntity.ok(doctorProfileService.getAllDoctorProfiles());
     }
+
+    @GetMapping("/department/{departmentId}")
+    public ResponseEntity<List<DoctorProfileDTO>> findByDepartmentId(@PathVariable Long departmentId) {
+        return ResponseEntity.ok(doctorProfileService.findByDepartmentId(departmentId));
+    }
 }

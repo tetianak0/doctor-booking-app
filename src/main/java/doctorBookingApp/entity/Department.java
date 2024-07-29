@@ -24,7 +24,7 @@ public final class Department {
     @Column(length = 50)
     private String titleDepartment;
 
-    //@JsonIgnore
-    //@OneToMany(mappedBy = "department")
-   // private List <Department> departments;
+    @JsonIgnore
+    @OneToMany(mappedBy = "department")
+    private List <Department> departments;
 }
