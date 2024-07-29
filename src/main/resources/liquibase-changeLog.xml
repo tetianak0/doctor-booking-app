@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+
+    <changeSet id="create.table.doctor_profile" author="author">
+        <createTable tableName="doctor_profile">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="true"/>
+            </column>
+
+            <column name="first_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="department_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="specialization" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="experience_years" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="review_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+
+
+    <changeSet id="create.table.department" author="author">
+        <createTable tableName="departments">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="true" />
+            </column>
+
+            <column name="title_department" type="VARCHAR(255)" >
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="doctor_profile" baseColumnNames="department_id" constraintName="fk_manager_department_id"
+                                 referencedTableName="departments"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+
+    <changeSet id="insert.default.doctor_profile" author="author">
+        <insert tableName="doctor_profile">
+            <column name="first_name" value="doctorName1" />
+            <column name="last_name" value="doctorLastname1" />
+            <column name="department_id" value="1"/>
+            <column name="specialization" value="Cardiology"/>
+            <column name="experience_years" value="10" />
+            <column name="review_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert.default.department" author="author">
+        <insert tableName="departments">
+            <column name="title_department" value="Cardiology_department"/>
+        </insert>
+    </changeSet>
+
+
+    
+</databaseChangeLog>

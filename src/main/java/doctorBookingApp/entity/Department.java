@@ -1,7 +1,11 @@
 package doctorBookingApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -11,12 +15,16 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "departments")
-public class Department {
+public final class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(length = 50)
     private String titleDepartment;
+
+    //@JsonIgnore
+    //@OneToMany(mappedBy = "department")
+   // private List <Department> departments;
 }
