@@ -27,7 +27,6 @@ public class DoctorProfile {
         private String lastName;
 
         @ManyToOne
-        @Column(length = 50)
         @JoinColumn(name = "department_id", nullable = false)
         private Department department_id;
 

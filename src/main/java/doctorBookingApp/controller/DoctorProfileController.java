@@ -1,8 +1,9 @@
 package doctorBookingApp.controller;
+
+
 import doctorBookingApp.dto.DoctorProfileDTO;
 import doctorBookingApp.service.DoctorProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -10,40 +11,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doctorProfiles")
-@Validated
+@RequestMapping("/api/doctor-profiles")
 public class DoctorProfileController {
 
+    private final DoctorProfileService doctorProfileService;
+
     @Autowired
-    private DoctorProfileService doctorProfileService;
+    public DoctorProfileController(DoctorProfileService doctorProfileService) {
+        this.doctorProfileService = doctorProfileService;
+    }
 
     @PostMapping
-    public ResponseEntity<DoctorProfileDTO> addDoctorProfile(@RequestBody @Validated DoctorProfileDTO doctorProfileDTO) {
-        DoctorProfileDTO createdDoctorProfile = doctorProfileService.addDoctorProfile(doctorProfileDTO);
-        return new ResponseEntity<>(createdDoctorProfile, HttpStatus.CREATED);
+    public ResponseEntity<DoctorProfileDTO> addDoctorProfile(@Validated @RequestBody DoctorProfileDTO doctorProfileDTO) {
+        return ResponseEntity.ok(doctorProfileService.addDoctorProfile(doctorProfileDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DoctorProfileDTO> updateDoctorProfile(@PathVariable Long id, @RequestBody @Validated DoctorProfileDTO doctorProfileDTO) {
-        DoctorProfileDTO updatedDoctorProfile = doctorProfileService.updateDoctorProfile(id, doctorProfileDTO);
-        return new ResponseEntity<>(updatedDoctorProfile, HttpStatus.OK);
+    public ResponseEntity<DoctorProfileDTO> updateDoctorProfile(
+            @PathVariable Long id,
+            @Validated @RequestBody DoctorProfileDTO doctorProfileDTO) {
+        return ResponseEntity.ok(doctorProfileService.updateDoctorProfile(id, doctorProfileDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDoctorProfile(@PathVariable Long id) {
         doctorProfileService.deleteDoctorProfile(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<DoctorProfileDTO>> getAllDoctorProfiles() {
-        List<DoctorProfileDTO> doctorProfiles = doctorProfileService.getAllDoctorProfiles();
-        return new ResponseEntity<>(doctorProfiles, HttpStatus.OK);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorProfileDTO> getDoctorProfileById(@PathVariable Long id) {
-        DoctorProfileDTO doctorProfile = doctorProfileService.getDoctorProfileById(id);
-        return new ResponseEntity<>(doctorProfile, HttpStatus.OK);
+        return ResponseEntity.ok(doctorProfileService.getDoctorProfileById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DoctorProfileDTO>> getAllDoctorProfiles() {
+        return ResponseEntity.ok(doctorProfileService.getAllDoctorProfiles());
     }
 }
