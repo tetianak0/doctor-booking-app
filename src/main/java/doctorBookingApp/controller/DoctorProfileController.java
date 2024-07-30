@@ -53,4 +53,9 @@ public class DoctorProfileController {
     public ResponseEntity<List<DoctorProfileDTO>> findByDepartmentId(@PathVariable Long departmentId) {
         return ResponseEntity.ok(doctorProfileService.findByDepartmentId(departmentId));
     }
+    //test
+    @GetMapping("hallo")
+    public String sayHallo(){
+        return "hallo";
+    }
 }
