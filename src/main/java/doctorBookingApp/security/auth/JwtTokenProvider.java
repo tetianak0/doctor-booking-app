@@ -14,59 +14,44 @@ public class JwtTokenProvider {
     private String jwtSecret = "984hg493gh0439rthr0429uruj2309yh937gc763fe87t3f89723gf";
     private long jwtLifetime = 60000;
 
-
-    public String createToken(String username){
+    public String createToken(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtLifetime);
-
-//        Map<String,Object> addClaims = new HashMap<>();
-//        addClaims.put("role", "admin");
-//        addClaims.put("email", "admin@company.com");
 
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-//              .setClaims(addClaims)
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
 
-
-    public boolean validateToken(String token){
+    public boolean validateToken(String token) {
         try {
-            Jwts
-                    .parser()
+            Jwts.parser()
                     .setSigningKey(jwtSecret)
-                    .parseClaimsJwt(token);
+                    .parseClaimsJws(token); // изменено с parseClaimsJwt на parseClaimsJws
             return true;
-        } catch (SignatureException e){
-            // Invalid JWT signature
+        } catch (SignatureException e) {
             throw new InvalidJwtException("Invalid JWT signature");
-        } catch (MalformedJwtException e){
-            // Invalid JWT token
-            throw new InvalidJwtException("Invalid JWT token ");
+        } catch (MalformedJwtException e) {
+            throw new InvalidJwtException("Invalid JWT token");
         } catch (ExpiredJwtException e) {
             log.error(e.getMessage());
             return false;
-        } catch (UnsupportedJwtException e){
-            // Unsupported
-            throw new InvalidJwtException("Unsupported JWT token ");
+        } catch (UnsupportedJwtException e) {
+            throw new InvalidJwtException("Unsupported JWT token");
         } catch (IllegalArgumentException e) {
-            // JWT claims string is empty
-            throw new InvalidJwtException("WT claims string is empty");
+            throw new InvalidJwtException("JWT claims string is empty");
         }
     }
 
-
-    public String getManagerNameFromJwt(String token){
+    public String getManagerNameFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token) // изменено с parseClaimsJwt на parseClaimsJws
                 .getBody();
 
         return claims.getSubject();
     }
-
-
 }
