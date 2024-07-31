@@ -35,9 +35,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())  // Отключение CSRF защиты
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/register").permitAll()
-                        .requestMatchers("/doctor_profile").permitAll()
+                        .requestMatchers("/api/api/hallo/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
