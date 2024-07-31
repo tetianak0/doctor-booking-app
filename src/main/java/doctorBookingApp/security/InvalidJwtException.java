@@ -1,4 +1,4 @@
-package org.group40fs1workingproject.security;
+package doctorBookingApp.security.auth;
 
 public class InvalidJwtException extends RuntimeException{
     public InvalidJwtException(String message) {
