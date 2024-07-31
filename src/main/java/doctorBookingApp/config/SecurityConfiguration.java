@@ -37,7 +37,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/doctor_profile").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form

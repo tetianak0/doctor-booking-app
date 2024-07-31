@@ -21,7 +21,7 @@ public class UserController implements UserApi {
     private final UserService userService;
     private final ConfirmationCodeService confirmationCodeService;
 
-    @PostMapping("/register")
+    @PostMapping("api/register")
     public ResponseEntity<String> registerUser(@RequestBody NewUserDTO newUser) throws MessagingException, RestException {
         userService.registrationUser(newUser);
         return ResponseEntity.ok("Регистрация практически закончена. Проверьте свой адрес электронной почты на наличие кода подтверждения");
