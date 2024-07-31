@@ -9,27 +9,27 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class ManagerUserDetails implements UserDetails {
+public class UserDetails implements UserDetails {
 
-    private final Manager manager;
+    private final User user;
 
-    public ManagerUserDetails(Manager manager) {
-        this.manager = manager;
+    public UserDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(manager.getRole().getAuthority()));
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getAuthority()));
     }
 
     @Override
     public String getPassword() {
-        return manager.getPassword();
+        return user.getPassword();
     }
 
     @Override
-    public String getUsername() {
-        return manager.getManagerName();
+    public String getUserName() {
+        return user.getUserName();
     }
 
     @Override
