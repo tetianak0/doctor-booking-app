@@ -3,6 +3,7 @@ package doctorBookingApp.controller;
 
 import doctorBookingApp.dto.DoctorProfileDTO;
 import doctorBookingApp.service.DoctorProfileService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctor-profiles")
+
 public class DoctorProfileController {
 
     private final DoctorProfileService doctorProfileService;
@@ -49,7 +51,7 @@ public class DoctorProfileController {
         return ResponseEntity.ok(doctorProfileService.getAllDoctorProfiles());
     }
 
-    @GetMapping("/department/{departmentId}")
+    @GetMapping(value="api/department/{departmentId}")
     public ResponseEntity<List<DoctorProfileDTO>> findByDepartmentId(@PathVariable Long departmentId) {
         return ResponseEntity.ok(doctorProfileService.findByDepartmentId(departmentId));
     }
@@ -58,4 +60,5 @@ public class DoctorProfileController {
     public String sayHallo(){
         return "hallo";
     }
+
 }
