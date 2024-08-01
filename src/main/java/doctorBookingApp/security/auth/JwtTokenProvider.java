@@ -12,7 +12,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private String jwtSecret = "984hg493gh0439rthr0429uruj2309yh937gc763fe87t3f89723gf";
-    private long jwtLifetime = 60000;
+    private long jwtLifetime = 600000;
 
     public String createToken(String username) {
         Date now = new Date();
