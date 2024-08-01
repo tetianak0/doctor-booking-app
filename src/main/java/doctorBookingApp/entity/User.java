@@ -3,6 +3,8 @@ package doctorBookingApp.entity;
 import doctorBookingApp.entity.enums.Role;
 import doctorBookingApp.entity.enums.State;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Objects;
@@ -18,26 +20,31 @@ import java.util.Objects;
 
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 40)
-    private String name;
+    @NotBlank
+    @Column(length = 40)
+    private String firstname;
 
-    @Column(nullable = false, length = 50)
+    @NotBlank
+    @Column(length = 50)
     private String surName;
 
-    @Column(nullable = false, length = 10)
+    @NotBlank
+    @Column(length = 10)
     private String birthDate;
 
-    @Column(nullable = false, length = 14)
+    @NotBlank
+    @Column(length = 14, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true)
+    @Email
+    @Column(unique = true)
     private String email;
 
+    @NotBlank
     @Column(nullable = false)
     private String hashPassword;
 
@@ -49,12 +56,34 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private State state;
 
+    /*
+Аннотации, такие как @Column и @Enumerated,
+обеспечивают управление схемой базы данных и поведением полей.
+ */
 
 
 //    @OneToMany(mappedBy = "user")
 //    private Set<ConfirmationCode> codes;
 
 //
+
+    /*
+    Переопределение методов equals и hashCode
+Методы equals и hashCode переопределены для обеспечения правильного сравнения объектов User.
+
+equals метод:
+
+Проверяет, равны ли два объекта (this и o).
+Сначала проверяет, ссылаются ли оба объекта на один и тот же экземпляр.
+Затем проверяет, является ли другой объект null.
+Определяет эффективный класс объектов, учитывая, что объекты могут быть прокси-классами Hibernate.
+Сравнивает идентификаторы (id) двух объектов User.
+hashCode метод:
+
+Возвращает хэш-код для объекта.
+Если объект является прокси-объектом Hibernate, используется хэш-код фактического класса.
+Иначе используется хэш-код текущего класса.
+     */
 //    @Override
 //    public final boolean equals(Object o) {
 //        if (this == o) return true;

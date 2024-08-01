@@ -14,7 +14,7 @@ import lombok.*;
 public class NewUserDTO {
 
         @NonNull
-        private String name;
+        private String firstname;
 
         @NonNull
         private String surName;
