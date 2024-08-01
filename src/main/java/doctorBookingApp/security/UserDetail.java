@@ -23,7 +23,7 @@ public class UserDetail implements UserDetails {
 
     private String getAuthority() {
 
-        return "USER"; // Пример роли
+        return "PATIENT"; // Пример роли
     }
 
     @Override
