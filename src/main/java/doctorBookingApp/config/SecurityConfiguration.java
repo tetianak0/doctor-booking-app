@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,9 +26,9 @@ public class SecurityConfiguration {
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.builder()
-                .username("user")
+                .username("User")
                 .password(passwordEncoder().encode("password"))
-                .roles("USER")
+                .roles("PATIENT")
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
@@ -37,7 +38,8 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())  // Отключение CSRF защиты
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/api/hallo/**").permitAll()
+                        .requestMatchers("/api/hallo/**").permitAll()
+                        .requestMatchers("/api/register/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
