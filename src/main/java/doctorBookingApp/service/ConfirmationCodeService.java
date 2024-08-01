@@ -23,15 +23,16 @@ public class ConfirmationCodeService {
     private final UserRepository userRepository;
 
     public String createAndSaveConfirmationCode(User user) {
-        String codeValue = UUID.randomUUID().toString();
-        ConfirmationCode confirmationCode = ConfirmationCode.builder()
+        String codeValue = UUID.randomUUID().toString(); //Генерируется код подтверждения (UUID) и сохраняется.
+        ConfirmationCode confirmationCode = ConfirmationCode.builder() //Создается объект кода подтверждения
                 .confirmationCode(codeValue)
                 .user(user)
-                .expiredDateTime(LocalDateTime.now().plusHours(12))
+                .expiredDateTime(LocalDateTime.now().plusHours(12)) // и сохраняется в базу данных с установленным временем истечения
                 .build();
         confirmationCodeRepository.save(confirmationCode);
         return codeValue;
     }
+
 
     @Transactional
     public UserDTO confirmation(String confirmationCode) throws RestException {
