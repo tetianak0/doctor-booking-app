@@ -1,6 +1,6 @@
 package doctorBookingApp.entity.enums;
 
-public enum typeOfInsurance {
+public enum TypeOfInsurance {
 
     PRIVATE, PUBLIC
 }

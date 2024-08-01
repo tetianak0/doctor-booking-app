@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 @Accessors
 @Getter
 @Setter
@@ -38,6 +40,7 @@ public class DoctorProfile {
 
         @Column(length = 50)
         private Integer review_id;
+
 
         public void setDepartment(Department department) {
                 this.department_id = department;
