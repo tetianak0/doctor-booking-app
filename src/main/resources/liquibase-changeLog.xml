@@ -51,13 +51,13 @@
         </createTable>
     </changeSet>
 
-    <!-- Создание таблицы users -->
+    <!-- Создание таблицы account -->
     <changeSet id="create.table.account" author="author">
         <createTable tableName="account">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(40)">
+            <column name="firstname" type="VARCHAR(40)">
                 <constraints nullable="false"/>
             </column>
             <column name="surName" type="VARCHAR(50)">
@@ -67,7 +67,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="phoneNumber" type="VARCHAR(14)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
@@ -79,37 +79,35 @@
                 <constraints nullable="false"/>
             </column>
             <column name="state" type="VARCHAR(20)">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
-    <!-- Заполнение таблицы данными -->
-    <changeSet id="2" author="yourname">
+    <!-- Вставка пользователей в таблицу account -->
+    <changeSet id="insert.default.users" author="yourname">
         <insert tableName="account">
-            <column name="name" value="John"/>
+            <column name="firstname" value="John"/>
             <column name="surName" value="Doe"/>
             <column name="birthDate" value="1990-01-01"/>
             <column name="phoneNumber" value="1234567890"/>
             <column name="email" value="john.doe@example.com"/>
             <column name="password" value="hashedpassword1"/>
             <column name="role" value="ADMIN"/>
-
+            <column name="state" value="ACTIVE"/>
         </insert>
 
         <insert tableName="account">
-            <column name="name" value="User"/>
+            <column name="firstname" value="User"/>
             <column name="surName" value="Smith"/>
             <column name="birthDate" value="1992-02-02"/>
             <column name="phoneNumber" value="0987654321"/>
             <column name="email" value="jane.smith@example.com"/>
             <column name="password" value="password"/>
             <column name="role" value="PATIENT"/>
-
+            <column name="state" value="ACTIVE"/>
         </insert>
     </changeSet>
-
-
 
     <!-- Добавление внешнего ключа в таблицу doctorProfiles -->
     <changeSet id="add.foreign.key.to.doctor_profile" author="author">
