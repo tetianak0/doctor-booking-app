@@ -23,11 +23,11 @@ public class ConfirmationCodeService {
     private final UserRepository userRepository;
 
     public String createAndSaveConfirmationCode(User user) {
-        String codeValue = UUID.randomUUID().toString(); //Генерируется код подтверждения (UUID) и сохраняется.
-        ConfirmationCode confirmationCode = ConfirmationCode.builder() //Создается объект кода подтверждения
+        String codeValue = UUID.randomUUID().toString(); 
+        ConfirmationCode confirmationCode = ConfirmationCode.builder() 
                 .confirmationCode(codeValue)
                 .user(user)
-                .expiredDateTime(LocalDateTime.now().plusHours(12)) // и сохраняется в базу данных с установленным временем истечения
+                .expiredDateTime(LocalDateTime.now().plusHours(12))
                 .build();
         confirmationCodeRepository.save(confirmationCode);
         return codeValue;
