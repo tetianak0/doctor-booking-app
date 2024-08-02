@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "TestController", description = "REST API для приветствия")
 public class HalloController {
 
-    @GetMapping("/api/hallo")
+
+    @GetMapping("/hallo")
     @ApiOperation(value = "Скажи привет", notes = "Возвращает строку 'hallo'")
-    public String sayHallo() {
-        return "hallo";
+    public Object sayHallo() {
+
+        return new Object();
     }
 }

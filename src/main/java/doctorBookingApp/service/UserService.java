@@ -3,9 +3,11 @@ package doctorBookingApp.service;
 
 import doctorBookingApp.dto.NewUserDTO;
 import doctorBookingApp.dto.UserDTO;
+import doctorBookingApp.entity.ConfirmationCode;
 import doctorBookingApp.entity.User;
 import doctorBookingApp.repository.UserRepository;
 import doctorBookingApp.exeption.RestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,10 @@ import org.springframework.stereotype.Service;
 import doctorBookingApp.entity.enums.Role;
 import doctorBookingApp.entity.enums.State;
 
+import doctorBookingApp.repository.ConfirmationCodeRepository;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -130,6 +135,27 @@ public class UserService {
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с Email " + phoneNumber + " не найден."));
         userRepository.deleteByPhoneNumber(user.getPhoneNumber());
 
+    }
+    @Autowired
+    private ConfirmationCodeRepository confirmationCodeRepository;
+
+
+    @Transactional
+    public boolean confirm(String confirmCode) throws RestException {
+        ConfirmationCode code = confirmationCodeRepository
+                .findByCodeAndExpiredDateTimeAfter(confirmCode, LocalDateTime.now())
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Код не найден или срок его действия истек"));
+
+        // Retrieve the user associated with the confirmation code
+        User user = code.getUser();
+
+        // Update the state of the user using the fully qualified enum value
+        user.setState(State.CONFIRMED);
+
+        // Save the updated user
+        userRepository.save(user);
+
+        return true;
     }
 }
 
