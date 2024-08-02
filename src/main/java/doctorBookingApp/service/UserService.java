@@ -22,24 +22,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor// Lombok-аннотация, которая создает конструктор
-                            // с параметрами для всех final полей.
+@RequiredArgsConstructor
+                            
 @Service
 public class UserService {
 
-    /*
-    Этот код представляет собой сервис для управления пользователями в приложении, реализованный с использованием Spring Boot.
-    В частности, он обрабатывает регистрацию пользователей, подтверждение регистрации, а также предоставляет
-     базовые CRUD операции (создание, чтение, обновление, удаление).
-     */
+   
 
     private final UserRepository userRepository;
     private final ConfirmationCodeService confirmationCodeService;
-    //UsersRepository, ConfirmationCodesRepository: Репозитории для работы с базой данных.
+    
     private final MailService mailService;
 
 
-    @Transactional //Обозначает, что методы должны выполняться в транзакции.
+    @Transactional .
     public UserDTO registrationUser(NewUserDTO newUser) throws RestException {
         if (userRepository.existsByEmail(newUser.getEmail())) {
             throw new RestException(HttpStatus.CONFLICT, "Пользователь с таким email уже существует: " + newUser.getEmail());
@@ -84,10 +80,7 @@ public class UserService {
         return UserDTO.from(userRepository.findByEmail(email)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с email " + email + " не найден")));
     }
-//    public UserDTO getUserByEmail(String email) {
-//        Optional<User> user = userRepository.findByEmail(email);
-//        return user.map(UserDTO::from).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с таким email не найден: " + email));
-//    }
+
 
 
 
@@ -97,10 +90,6 @@ public class UserService {
     }
 
 
-//    public UserDTO getUserByPhoneNumber(String phoneNumber) throws RestException {
-//        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
-//        return user.map(UserDTO::from).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с номером телефона " + phoneNumber + " не найден."));
-//    }
 
     public UserDTO editUser(Long userId, UserDTO userDTO) throws RestException {
         User user = userRepository.findById(userId)
@@ -146,13 +135,13 @@ public class UserService {
                 .findByCodeAndExpiredDateTimeAfter(confirmCode, LocalDateTime.now())
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Код не найден или срок его действия истек"));
 
-        // Retrieve the user associated with the confirmation code
+       
         User user = code.getUser();
 
-        // Update the state of the user using the fully qualified enum value
+       
         user.setState(State.CONFIRMED);
 
-        // Save the updated user
+       
         userRepository.save(user);
 
         return true;
