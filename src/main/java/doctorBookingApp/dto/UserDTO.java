@@ -11,20 +11,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Data //Генерирует геттеры, сеттеры, toString(), equals(), hashCode().
+@Data 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Schema(name = "User", description = "Данные пользователя")
-//@Schema: Используется для генерации документации API
-// с помощью OpenAPI (Swagger). Указывает название и описание схемы.
+
 public class UserDTO {
 
-/*
-Этот код представляет собой Data Transfer Object (DTO) для класса User в приложении.
-Он используется для передачи данных о пользователях между различными слоями приложения,
-особенно при работе с REST API.
- */
+
     @Schema(description = "Идентификатор пользователя", example = "1")
     private Long id;
 
@@ -47,10 +42,7 @@ public class UserDTO {
     private Role role;
 
 
-    /*
-    Этот метод создает объект UserDto из объекта User.
-    Используется паттерн строитель (Builder), чтобы упростить создание объекта UserDto.
-     */
+ 
     public static UserDTO from(User user) {
         return UserDTO.builder()
                 .id(user.getId())
@@ -65,10 +57,7 @@ public class UserDTO {
     }
 
 
-    /*
-    Этот метод преобразует коллекцию объектов User в список объектов UserDto.
-Используется Stream API для обработки коллекций и преобразования каждого объекта User в UserDto.
-     */
+  
     public static List<UserDTO> from(Collection<User> users) {
 
         return users.stream()
