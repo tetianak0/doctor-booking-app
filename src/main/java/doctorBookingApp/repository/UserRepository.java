@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-/*
-Репозиторий определяет методы для поиска пользователей по различным полям и проверки их существования.
- */
+
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
