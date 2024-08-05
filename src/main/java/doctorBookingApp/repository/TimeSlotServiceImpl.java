@@ -15,7 +15,7 @@ import java.util.Optional;
 public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Autowired
-    private final TimeSlotRepository timeSlotRepository;
+    private TimeSlotRepository timeSlotRepository;
 
     @Autowired
     private DoctorProfileRepository doctorProfileRepository;
