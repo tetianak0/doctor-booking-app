@@ -3,9 +3,11 @@ package doctorBookingApp.service;
 
 import doctorBookingApp.dto.NewUserDTO;
 import doctorBookingApp.dto.UserDTO;
+import doctorBookingApp.entity.ConfirmationCode;
 import doctorBookingApp.entity.User;
 import doctorBookingApp.repository.UserRepository;
 import doctorBookingApp.exeption.RestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,25 +15,34 @@ import org.springframework.stereotype.Service;
 import doctorBookingApp.entity.enums.Role;
 import doctorBookingApp.entity.enums.State;
 
+import doctorBookingApp.repository.ConfirmationCodeRepository;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
+                            
 @Service
 public class UserService {
 
+   
+
     private final UserRepository userRepository;
     private final ConfirmationCodeService confirmationCodeService;
+    
     private final MailService mailService;
 
-    @Transactional
+
+    @Transactional .
     public UserDTO registrationUser(NewUserDTO newUser) throws RestException {
         if (userRepository.existsByEmail(newUser.getEmail())) {
             throw new RestException(HttpStatus.CONFLICT, "Пользователь с таким email уже существует: " + newUser.getEmail());
         }
 
         User user = User.builder()
-                .name(newUser.getName())
+                .firstname(newUser.getFirstname())
                 .surName(newUser.getSurName())
                 .birthDate(newUser.getBirthDate())
                 .phoneNumber(newUser.getPhoneNumber())
@@ -49,21 +60,40 @@ public class UserService {
 
     }
 
-    public List<UserDTO> findAll() {
+
+    public List<UserDTO> findAllUsers() {
         return UserDTO.from(userRepository.findAll());
     }
 
     public UserDTO getUserById(Long userId) throws RestException {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с ID " + userId + " не найден"));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с ID " + userId + " не найден."));
         return UserDTO.from(user);
     }
 
-    //ПОИСК ПО ПОЧТЕ И ТЕЛЕФОНУ, ПО ИМЕНИ С КОНТРОЛЕМ
+    public List<UserDTO> getUserByFullName(String surName, String firstname) {
+        return UserDTO.from(userRepository.findByFullName(surName, firstname));
+    }
+
+
+    public UserDTO getUserByEmail(String email) throws RestException {
+        return UserDTO.from(userRepository.findByEmail(email)
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с email " + email + " не найден")));
+    }
+
+
+
+
+    public UserDTO getUserByPhoneNumber(String phoneNumber) throws RestException {
+        return UserDTO.from(userRepository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с номером телефона " + phoneNumber + " не найден.")));
+    }
+
+
 
     public UserDTO editUser(Long userId, UserDTO userDTO) throws RestException {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с ID " + userId + " не найден"));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с ID " + userId + " не найден."));
         user.setSurName(userDTO.getSurName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setEmail(userDTO.getEmail());
@@ -72,15 +102,50 @@ public class UserService {
 
     }
 
-    public void deleteUser(Long userId) throws RestException {
+    public void deleteUserById(Long userId) throws RestException {
         if (!userRepository.existsById(userId)) {
-            throw new RestException(HttpStatus.NOT_FOUND, "Пользователь с ID " + userId + " не найден");
+            throw new RestException(HttpStatus.NOT_FOUND, "Пользователь с ID " + userId + " не найден.");
         }
         userRepository.deleteById(userId);
     }
 
 
 
+    public void deleteUserByEmail(String email) throws RestException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с Email " + email + " не найден."));
+        userRepository.deleteByEmail(user.getEmail());
+
+    }
+
+
+    public void deleteUserByPhoneNumber(String phoneNumber) throws RestException {
+        User user = userRepository.findByEmail(phoneNumber)
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Пользователь с Email " + phoneNumber + " не найден."));
+        userRepository.deleteByPhoneNumber(user.getPhoneNumber());
+
+    }
+    @Autowired
+    private ConfirmationCodeRepository confirmationCodeRepository;
+
+
+    @Transactional
+    public boolean confirm(String confirmCode) throws RestException {
+        ConfirmationCode code = confirmationCodeRepository
+                .findByCodeAndExpiredDateTimeAfter(confirmCode, LocalDateTime.now())
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Код не найден или срок его действия истек"));
+
+       
+        User user = code.getUser();
+
+       
+        user.setState(State.CONFIRMED);
+
+       
+        userRepository.save(user);
+
+        return true;
+    }
 }
 
 

@@ -23,8 +23,8 @@ public class ConfirmationCodeService {
     private final UserRepository userRepository;
 
     public String createAndSaveConfirmationCode(User user) {
-        String codeValue = UUID.randomUUID().toString();
-        ConfirmationCode confirmationCode = ConfirmationCode.builder()
+        String codeValue = UUID.randomUUID().toString(); 
+        ConfirmationCode confirmationCode = ConfirmationCode.builder() 
                 .confirmationCode(codeValue)
                 .user(user)
                 .expiredDateTime(LocalDateTime.now().plusHours(12))
@@ -32,6 +32,7 @@ public class ConfirmationCodeService {
         confirmationCodeRepository.save(confirmationCode);
         return codeValue;
     }
+
 
     @Transactional
     public UserDTO confirmation(String confirmationCode) throws RestException {

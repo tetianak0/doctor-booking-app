@@ -20,6 +20,10 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     @Autowired
     private DoctorProfileRepository doctorProfileRepository;
 
+    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository) {
+        this.timeSlotRepository = timeSlotRepository;
+    }
+
     @Override
     public TimeSlot addTimeSlot(TimeSlotDTO timeSlotDTO) {
         DoctorProfile doctor = doctorProfileRepository.findById(timeSlotDTO.getDoctor_id())

@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Data
+@Data 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Schema(name = "User", description = "Данные пользователя")
+
 public class UserDTO {
 
 
@@ -23,7 +24,7 @@ public class UserDTO {
     private Long id;
 
     @Schema(description = "Имя пользователя", example = "Thomas")
-    private String name;
+    private String firstname;
 
     @Schema(description = "Фамилия пользователя", example = "Mann")
     private String surName;
@@ -40,10 +41,12 @@ public class UserDTO {
     @Schema(description = "Роль пользователя", example = "USER")
     private Role role;
 
+
+ 
     public static UserDTO from(User user) {
         return UserDTO.builder()
                 .id(user.getId())
-                .name(user.getName())
+                .firstname(user.getFirstname())
                 .surName(user.getSurName())
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
@@ -53,6 +56,8 @@ public class UserDTO {
 
     }
 
+
+  
     public static List<UserDTO> from(Collection<User> users) {
 
         return users.stream()
