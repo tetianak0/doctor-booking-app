@@ -20,10 +20,10 @@ public class ConfirmationCode {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String confirmationCode;
+    private String code;
 
     @ManyToOne
-    @JoinColumn(name = "userID", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
 
