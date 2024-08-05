@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "doctorProfiles")
+@Table(name = "doctor_profile")
 public class DoctorProfile {
 
         @Id
@@ -29,7 +29,7 @@ public class DoctorProfile {
         private String lastName;
 
         @ManyToOne
-        @JoinColumn(name = "department", nullable = false)
+        @JoinColumn(name = "department_id", nullable = false)
         private Department department;
 
         @Column(length = 255)
@@ -39,8 +39,13 @@ public class DoctorProfile {
         private Integer experienceYears;
 
         @Column(length = 50)
-        private Integer reviewId;
+        private Integer review_id;
 
 
+        public void setDepartment(Department department) {
+                this.department = department;
+        }
 
+        public Department getDepartment() {
+                return department; }
 }
