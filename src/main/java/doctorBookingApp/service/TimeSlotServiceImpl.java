@@ -1,10 +1,12 @@
-package doctorBookingApp.repository;
+package doctorBookingApp.service;
 
 
 import doctorBookingApp.dto.TimeSlotDTO;
 import doctorBookingApp.entity.DoctorProfile;
 import doctorBookingApp.entity.TimeSlot;
 import doctorBookingApp.entity.enums.TypeOfInsurance;
+import doctorBookingApp.repository.DoctorProfileRepository;
+import doctorBookingApp.repository.TimeSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,25 +17,26 @@ import java.util.Optional;
 public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Autowired
-    private TimeSlotRepository timeSlotRepository;
+    private final TimeSlotRepository timeSlotRepository;
 
     @Autowired
-    private DoctorProfileRepository doctorProfileRepository;
+    private final DoctorProfileRepository doctorProfileRepository;
 
-    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository) {
+    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, DoctorProfileRepository doctorProfileRepository) {
         this.timeSlotRepository = timeSlotRepository;
+        this.doctorProfileRepository = doctorProfileRepository;
     }
 
     @Override
     public TimeSlot addTimeSlot(TimeSlotDTO timeSlotDTO) {
-        DoctorProfile doctor = doctorProfileRepository.findById(timeSlotDTO.getDoctor_id())
+        DoctorProfile doctor = doctorProfileRepository.findById(timeSlotDTO.getDoctorId())
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
         TimeSlot timeSlot = TimeSlot.builder()
                 .doctor(doctor)
-                .date_time(timeSlotDTO.getDate_time())
+                .dateTime(timeSlotDTO.getDateTime())
                 .insurance(timeSlotDTO.getInsurance())
-                .is_booked(timeSlotDTO.getIs_booked())
+                .isBooked(timeSlotDTO.getIsBooked())
                 .build();
 
         return timeSlotRepository.save(timeSlot);
@@ -44,13 +47,13 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         TimeSlot existingTimeSlot = timeSlotRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("TimeSlot not found"));
 
-        DoctorProfile doctor = doctorProfileRepository.findById(timeSlotDTO.getDoctor_id())
+        DoctorProfile doctor = doctorProfileRepository.findById(timeSlotDTO.getDoctorId())
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
         existingTimeSlot.setDoctor(doctor);
-        existingTimeSlot.setDate_time(timeSlotDTO.getDate_time());
+        existingTimeSlot.setDateTime(timeSlotDTO.getDateTime());
         existingTimeSlot.setInsurance(timeSlotDTO.getInsurance());
-        existingTimeSlot.setIs_booked(timeSlotDTO.getIs_booked());
+        existingTimeSlot.setIsBooked(timeSlotDTO.getIsBooked());
 
         return timeSlotRepository.save(existingTimeSlot);
     }

@@ -36,12 +36,12 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
                 .orElseThrow(() -> new RuntimeException("DoctorProfile not found"));
         existingDoctorProfile.setFirstName(doctorProfileDTO.getFirstName());
         existingDoctorProfile.setLastName(doctorProfileDTO.getLastName());
-        Department department = departmentRepository.findById(doctorProfileDTO.getDepartment_id())
+        Department department = departmentRepository.findById(doctorProfileDTO.getDepartmentId())
                 .orElseThrow(() -> new RuntimeException("Department not found"));
         existingDoctorProfile.setDepartment(department);
         existingDoctorProfile.setSpecialization(doctorProfileDTO.getSpecialization());
         existingDoctorProfile.setExperienceYears(doctorProfileDTO.getExperienceYears());
-        existingDoctorProfile.setReview_id(doctorProfileDTO.getReview_id());
+        existingDoctorProfile.setReviewId(doctorProfileDTO.getReviewId());
         existingDoctorProfile = doctorProfileRepository.save(existingDoctorProfile);
         return convertToDTO(existingDoctorProfile);
     }
@@ -73,16 +73,16 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
     }
 
     private DoctorProfile convertToEntity(DoctorProfileDTO doctorProfileDTO) {
-        Department department = departmentRepository.findById(doctorProfileDTO.getDepartment_id())
+        Department department = departmentRepository.findById(doctorProfileDTO.getDepartmentId())
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
         return DoctorProfile.builder()
                 .firstName(doctorProfileDTO.getFirstName())
                 .lastName(doctorProfileDTO.getLastName())
-                .department_id(department)
+                .department(department)
                 .specialization(doctorProfileDTO.getSpecialization())
                 .experienceYears(doctorProfileDTO.getExperienceYears())
-                .review_id(doctorProfileDTO.getReview_id())
+                .reviewId(doctorProfileDTO.getReviewId())
                 .build();
     }
 
@@ -91,10 +91,10 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
                 .id(doctorProfile.getId())
                 .firstName(doctorProfile.getFirstName())
                 .lastName(doctorProfile.getLastName())
-                .department_id(doctorProfile.getDepartment().getId())
+                .departmentId(doctorProfile.getDepartment().getId())
                 .specialization(doctorProfile.getSpecialization())
                 .experienceYears(doctorProfile.getExperienceYears())
-                .review_id(doctorProfile.getReview_id())
+                .reviewId(doctorProfile.getReviewId())
                 .build();
     }
 }

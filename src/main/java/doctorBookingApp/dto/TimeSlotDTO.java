@@ -9,8 +9,8 @@ import lombok.*;
 @Builder
 public class TimeSlotDTO {
 
-    private Long doctor_id;
-    private Long date_time;
+    private Long doctorId;
+    private Long dateTime;
     private TypeOfInsurance insurance;
-    private Boolean is_booked;
+    private Boolean isBooked;
 }

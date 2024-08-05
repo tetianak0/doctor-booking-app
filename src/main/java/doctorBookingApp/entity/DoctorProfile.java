@@ -29,8 +29,8 @@ public class DoctorProfile {
         private String lastName;
 
         @ManyToOne
-        @JoinColumn(name = "department_id", nullable = false)
-        private Department department_id;
+        @JoinColumn(name = "department", nullable = false)
+        private Department department;
 
         @Column(length = 255)
         private String specialization;
@@ -39,13 +39,8 @@ public class DoctorProfile {
         private Integer experienceYears;
 
         @Column(length = 50)
-        private Integer review_id;
+        private Integer reviewId;
 
 
-        public void setDepartment(Department department) {
-                this.department_id = department;
-        }
 
-        public Department getDepartment() {
-                return department_id; }
 }

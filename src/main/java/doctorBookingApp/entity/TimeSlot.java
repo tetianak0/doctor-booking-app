@@ -23,10 +23,10 @@ public class TimeSlot {
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private DoctorProfile doctor;
 
-    private Long date_time;
+    private Long dateTime;
 
     @Enumerated(EnumType.STRING)
     private TypeOfInsurance insurance;
 
-    private Boolean is_booked;
+    private Boolean isBooked;
 }
