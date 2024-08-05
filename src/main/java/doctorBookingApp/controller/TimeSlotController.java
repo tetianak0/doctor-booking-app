@@ -2,7 +2,7 @@ package doctorBookingApp.controller;
 import doctorBookingApp.dto.TimeSlotDTO;
 import doctorBookingApp.entity.TimeSlot;
 import doctorBookingApp.entity.enums.TypeOfInsurance;
-import doctorBookingApp.repository.TimeSlotService;
+import doctorBookingApp.service.TimeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

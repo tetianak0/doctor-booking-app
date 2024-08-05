@@ -35,7 +35,7 @@ public class UserService {
     private final MailService mailService;
 
 
-    @Transactional .
+    @Transactional
     public UserDTO registrationUser(NewUserDTO newUser) throws RestException {
         if (userRepository.existsByEmail(newUser.getEmail())) {
             throw new RestException(HttpStatus.CONFLICT, "Пользователь с таким email уже существует: " + newUser.getEmail());

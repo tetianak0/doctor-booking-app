@@ -22,7 +22,7 @@ public class DoctorProfileDTO {
     private String lastName;
 
     @NotNull(message = "ID департамента обязательно для заполнения")
-    private Long department_id;
+    private Long departmentId;
 
     @NotBlank(message = "Специализация обязательно для заполнения")
     @Size(max = 255, message = "Специализация должна быть не длиннее 255 символов")
@@ -33,5 +33,5 @@ public class DoctorProfileDTO {
     @Max(value = 100, message = "Количество лет опыта должно быть не больше 100")
     private Integer experienceYears;
 
-    private Integer review_id; // Это поле не обязательно для заполнения, потому нет валидации.
+    private Integer reviewId; // Это поле не обязательно для заполнения, потому нет валидации.
 }

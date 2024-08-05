@@ -1,4 +1,4 @@
-package doctorBookingApp.repository;
+package doctorBookingApp.service;
 
 import doctorBookingApp.dto.TimeSlotDTO;
 import doctorBookingApp.entity.TimeSlot;
