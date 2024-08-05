@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.util.List;
 
 @Accessors
 @Getter
@@ -39,7 +38,7 @@ public class DoctorProfile {
         private Integer experienceYears;
 
         @Column(length = 50)
-        private Integer review_id;
+        private Integer reviewId;
 
 
         public void setDepartment(Department department) {

@@ -28,10 +28,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     Optional<User> findFirstByCodesContains(ConfirmationCode confirmationCode);
 
-    List<User> findByFullName(String surName, String firstName);
+//    List<User> findByFullName(String surName, String firstName);
 
 
-    List<User> findAll (Long id);
+//    List<User> findAll (Long id);
 
 
 

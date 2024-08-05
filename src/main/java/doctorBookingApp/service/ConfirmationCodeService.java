@@ -25,7 +25,7 @@ public class ConfirmationCodeService {
     public String createAndSaveConfirmationCode(User user) {
         String codeValue = UUID.randomUUID().toString(); 
         ConfirmationCode confirmationCode = ConfirmationCode.builder() 
-                .confirmationCode(codeValue)
+                .code(codeValue)
                 .user(user)
                 .expiredDateTime(LocalDateTime.now().plusHours(12))
                 .build();

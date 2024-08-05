@@ -71,9 +71,9 @@ public class UserService {
         return UserDTO.from(user);
     }
 
-    public List<UserDTO> getUserByFullName(String surName, String firstname) {
-        return UserDTO.from(userRepository.findByFullName(surName, firstname));
-    }
+//    public List<UserDTO> getUserByFullName(String surName, String firstname) {
+//        return UserDTO.from(userRepository.findByFullName(surName, firstname));
+//    }
 
 
     public UserDTO getUserByEmail(String email) throws RestException {
