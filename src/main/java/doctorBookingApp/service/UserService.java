@@ -4,7 +4,9 @@ package doctorBookingApp.service;
 import doctorBookingApp.dto.NewUserDTO;
 import doctorBookingApp.dto.UserDTO;
 import doctorBookingApp.entity.ConfirmationCode;
+import doctorBookingApp.entity.DoctorProfile;
 import doctorBookingApp.entity.User;
+import doctorBookingApp.repository.DoctorProfileRepository;
 import doctorBookingApp.repository.UserRepository;
 import doctorBookingApp.exeption.RestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import doctorBookingApp.entity.enums.State;
 import doctorBookingApp.repository.ConfirmationCodeRepository;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,7 @@ public class UserService {
    
 
     private final UserRepository userRepository;
+    private final DoctorProfileRepository doctorProfileRepository;
     private final ConfirmationCodeService confirmationCodeService;
     
     private final MailService mailService;
@@ -146,6 +150,30 @@ public class UserService {
 
         return true;
     }
+
+    // добавила методы, которых недоставало для AdminController
+
+    @Transactional
+    public List<UserDTO> findUsersByDoctor(Long doctorId) throws RestException {
+        DoctorProfile doctor = doctorProfileRepository.findById(doctorId)
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Доктор с ID " + doctorId + " не найден."));
+        List<User> users = userRepository.findByDoctor(doctor);
+        return UserDTO.from(users);
+    }
+
+    @Transactional
+    public List<UserDTO> findUsersByDate(LocalDate date) {
+        List<User> users = userRepository.findByBirthDate(date);
+        return UserDTO.from(users);
+    }
+
+
+    @Transactional
+    public List<UserDTO> findUsersByInsurance(String insurance) {
+        List<User> users = userRepository.findByInsurance(insurance);
+        return UserDTO.from(users);
+    }
+
 }
 
 
