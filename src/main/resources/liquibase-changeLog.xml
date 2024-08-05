@@ -8,7 +8,7 @@
     <!-- Создание таблицы departments -->
     <changeSet id="create.table.department" author="author">
         <createTable tableName="departments">
-            <column name="id" type="INT" autoIncrement="true">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="titleDepartment" type="VARCHAR(255)">
@@ -24,10 +24,10 @@
         </insert>
     </changeSet>
 
-    <!-- Создание таблицы doctorProfiles -->
+    <!-- Создание таблицы doctor_profile -->
     <changeSet id="create.table.doctor_profile" author="author">
-        <createTable tableName="doctorProfiles">
-            <column name="id" type="INT" autoIncrement="true">
+        <createTable tableName="doctor_profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="firstName" type="VARCHAR(255)">
@@ -36,16 +36,16 @@
             <column name="lastName" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="department_id" type="INT">
+            <column name="department_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="specialization" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="experienceYears" type="INT">
+            <column name="experienceYears" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="review_id" type="INT">
+            <column name="review_id" type="BIGINT">
                 <constraints nullable="true"/>
             </column>
         </createTable>
@@ -54,7 +54,7 @@
     <!-- Создание таблицы account -->
     <changeSet id="create.table.account" author="author">
         <createTable tableName="account">
-            <column name="id" type="INT" autoIncrement="true">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="firstname" type="VARCHAR(40)">
@@ -94,7 +94,7 @@
             <column name="email" value="john.doe@example.com"/>
             <column name="password" value="hashedpassword1"/>
             <column name="role" value="ADMIN"/>
-            <column name="state" value="ACTIVE"/>
+            <column name="state" value="CONFIRMED"/>
         </insert>
 
         <insert tableName="account">
@@ -105,20 +105,20 @@
             <column name="email" value="jane.smith@example.com"/>
             <column name="password" value="password"/>
             <column name="role" value="PATIENT"/>
-            <column name="state" value="ACTIVE"/>
+            <column name="state" value="CONFIRMED"/>
         </insert>
     </changeSet>
 
-    <!-- Добавление внешнего ключа в таблицу doctorProfiles -->
+    <!-- Добавление внешнего ключа в таблицу doctor_profile -->
     <changeSet id="add.foreign.key.to.doctor_profile" author="author">
-        <addForeignKeyConstraint baseTableName="doctorProfiles" baseColumnNames="department_id"
-                                 constraintName="fk_doctorProfile_department_id"
+        <addForeignKeyConstraint baseTableName="doctor_profile" baseColumnNames="department_id"
+                                 constraintName="fk_doctor_profile_department_id"
                                  referencedTableName="departments" referencedColumnNames="id"/>
     </changeSet>
 
-    <!-- Вставка данных в таблицу doctorProfiles -->
+    <!-- Вставка данных в таблицу doctor_profile -->
     <changeSet id="insert.default.doctor_profile" author="author">
-        <insert tableName="doctorProfiles">
+        <insert tableName="doctor_profile">
             <column name="firstName" value="doctorName1"/>
             <column name="lastName" value="doctorLastname1"/>
             <column name="department_id" value="1"/>
