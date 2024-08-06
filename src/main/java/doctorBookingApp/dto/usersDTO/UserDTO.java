@@ -1,4 +1,4 @@
-package doctorBookingApp.dto;
+package doctorBookingApp.dto.usersDTO;
 
 
 import doctorBookingApp.entity.User;

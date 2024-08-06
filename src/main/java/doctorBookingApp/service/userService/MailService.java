@@ -1,4 +1,4 @@
-package doctorBookingApp.service;
+package doctorBookingApp.service.userService;
 
 
 import doctorBookingApp.entity.User;
@@ -15,7 +15,7 @@ public class MailService {
 
     public void sendConfirmationEmail(User user, String confirmationCode) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("praxis@gmail.com");
+        mailMessage.setFrom("doctorbooking4@gmail.com");
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Registration Confirmation Code");
         mailMessage.setText("Bitte bestätigen Sie Ihre Registrierung mit dem Code: " + confirmationCode);
@@ -25,3 +25,4 @@ public class MailService {
 }
 
 
+//формирует и отправляет письмо с кодом подтверждения
