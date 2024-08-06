@@ -47,7 +47,7 @@ public class UserService {
                 .birthDate(newUser.getBirthDate())
                 .phoneNumber(newUser.getPhoneNumber())
                 .email(newUser.getEmail())
-                .hashPassword(newUser.getPassword())
+                .password(newUser.getPassword())
                 .role(Role.PATIENT)
                 .state(State.NOT_CONFIRMED)
                 .build();
