@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/timeslots")
+@RequestMapping("/timeslots")
 public class TimeSlotController {
 
     @Autowired
