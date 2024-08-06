@@ -29,8 +29,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             String jwt = getTokenFromRequest(request);
-
-            logger.info("токен : " + jwt);
             if (jwt != null && jwtTokenProvider.validateToken(jwt)) {
                 String userName = jwtTokenProvider.getUserNameFromJWT(jwt);
                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(userName);
@@ -38,7 +36,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (InvalidJwtException e){
-            logger.error("ОШИБКА !!!  " + e.getMessage());
+            logger.error("Invalid JWT token  " + e.getMessage());
         }
 
         filterChain.doFilter(request, response);
