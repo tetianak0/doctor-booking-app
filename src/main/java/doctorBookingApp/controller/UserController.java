@@ -28,6 +28,7 @@
 
      //РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ
 
+
      @PostMapping("/register")
      public ResponseEntity<String> registerUser(@RequestBody NewUserDTO newUser) throws MessagingException, RestException {
          userService.registrationUser(newUser);
