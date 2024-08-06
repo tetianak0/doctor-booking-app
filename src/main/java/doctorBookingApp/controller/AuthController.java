@@ -1,11 +1,11 @@
 package doctorBookingApp.controller;
 
 
-
 import doctorBookingApp.security.dto.AuthRequest;
 import doctorBookingApp.security.dto.AuthResponse;
 import doctorBookingApp.security.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +27,7 @@ public class AuthController implements AuthApi {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUserName(),
+                        request.getEmail(),
                         request.getPassword()
                 )
         );

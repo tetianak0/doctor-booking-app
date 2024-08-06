@@ -1,6 +1,7 @@
 package doctorBookingApp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -21,19 +22,24 @@ public class DoctorProfile {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
+        @NotBlank
         @Column(length = 40)
         private String firstName;
 
+        @NotBlank
         @Column(length = 50)
         private String lastName;
 
+        @NotBlank
         @ManyToOne
         @JoinColumn(name = "department_id", nullable = false)
         private Department department;
 
+        @NotBlank
         @Column(length = 255)
         private String specialization;
 
+        @NotBlank
         @Column(length = 3)
         private Integer experienceYears;
 

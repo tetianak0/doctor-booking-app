@@ -57,7 +57,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="first_name" type="VARCHAR(40)">
+            <column name="firstname" type="VARCHAR(40)">
                 <constraints nullable="false"/>
             </column>
             <column name="sur_name" type="VARCHAR(50)">
@@ -87,7 +87,7 @@
     <!-- Вставка пользователей в таблицу account -->
     <changeSet id="insert.default.users" author="yourname">
         <insert tableName="account">
-            <column name="first_name" value="John"/>
+            <column name="firstname" value="John"/>
             <column name="sur_name" value="Doe"/>
             <column name="birth_date" value="1990-01-01"/>
             <column name="phone_number" value="1234567890"/>
@@ -98,7 +98,7 @@
         </insert>
 
         <insert tableName="account">
-            <column name="first_name" value="User"/>
+            <column name="firstname" value="User"/>
             <column name="sur_name" value="Smith"/>
             <column name="birth_date" value="1992-02-02"/>
             <column name="phone_number" value="0987654321"/>
@@ -123,7 +123,7 @@
             <column name="last_name" value="doctorLastname1"/>
             <column name="department_id" value="1"/>
             <column name="specialization" value="Cardiology"/>
-            <column name="experienceYears" value="10"/>
+            <column name="experience_years" value="10"/>
             <column name="review_id" value="1"/>
         </insert>
     </changeSet>

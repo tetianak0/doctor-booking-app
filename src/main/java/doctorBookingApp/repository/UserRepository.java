@@ -1,11 +1,11 @@
 package doctorBookingApp.repository;
 
-import doctorBookingApp.dto.UserDTO;
+
 import doctorBookingApp.entity.ConfirmationCode;
 import doctorBookingApp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+
 import java.util.Optional;
 
 

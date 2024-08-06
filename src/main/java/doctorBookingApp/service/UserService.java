@@ -9,6 +9,7 @@ import doctorBookingApp.repository.UserRepository;
 import doctorBookingApp.exeption.RestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ConfirmationCodeService confirmationCodeService;
+    private final PasswordEncoder passwordEncoder;
     
-    private final MailService mailService;
+//    private final MailService mailService;
 
 
     @Transactional
@@ -47,14 +49,14 @@ public class UserService {
                 .birthDate(newUser.getBirthDate())
                 .phoneNumber(newUser.getPhoneNumber())
                 .email(newUser.getEmail())
-                .password(newUser.getPassword())
+                .password(passwordEncoder.encode(newUser.getPassword()))
                 .role(Role.PATIENT)
-                .state(State.NOT_CONFIRMED)
+                .state(State.CONFIRMED)
                 .build();
         userRepository.save(user);
 
-        String codeValue = confirmationCodeService.createAndSaveConfirmationCode(user);
-        mailService.sendConfirmationEmail(user, codeValue);
+//        String codeValue = confirmationCodeService.createAndSaveConfirmationCode(user);
+//        mailService.sendConfirmationEmail(user, codeValue);
 
         return UserDTO.from(user);
 
@@ -135,10 +137,10 @@ public class UserService {
                 .findByCodeAndExpiredDateTimeAfter(confirmCode, LocalDateTime.now())
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Код не найден или срок его действия истек"));
 
-       
+
         User user = code.getUser();
 
-       
+
         user.setState(State.CONFIRMED);
 
        
