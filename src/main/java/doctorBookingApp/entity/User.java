@@ -48,7 +48,7 @@ public class User {
 
     @NotBlank
     @Column(nullable = false)
-    private String hashPassword;
+    private String password;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
