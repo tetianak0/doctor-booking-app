@@ -11,7 +11,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="titleDepartment" type="VARCHAR(255)">
+            <column name="title_department" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -20,7 +20,7 @@
     <!-- Вставка данных в таблицу departments -->
     <changeSet id="insert.default.department" author="author">
         <insert tableName="departments">
-            <column name="titleDepartment" value="Cardiology_department"/>
+            <column name="title_department" value="Cardiology_department"/>
         </insert>
     </changeSet>
 
@@ -30,10 +30,10 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="firstName" type="VARCHAR(255)">
+            <column name="first_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="lastName" type="VARCHAR(255)">
+            <column name="last_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="department_id" type="BIGINT">
@@ -42,7 +42,7 @@
             <column name="specialization" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="experienceYears" type="BIGINT">
+            <column name="experience_years" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="review_id" type="BIGINT">
@@ -57,16 +57,16 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="firstname" type="VARCHAR(40)">
+            <column name="first_name" type="VARCHAR(40)">
                 <constraints nullable="false"/>
             </column>
-            <column name="surName" type="VARCHAR(50)">
+            <column name="sur_name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="birthDate" type="VARCHAR(10)">
+            <column name="birth_date" type="VARCHAR(10)">
                 <constraints nullable="false"/>
             </column>
-            <column name="phoneNumber" type="VARCHAR(14)">
+            <column name="phone_number" type="VARCHAR(14)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="email" type="VARCHAR(255)">
@@ -87,10 +87,10 @@
     <!-- Вставка пользователей в таблицу account -->
     <changeSet id="insert.default.users" author="yourname">
         <insert tableName="account">
-            <column name="firstname" value="John"/>
-            <column name="surName" value="Doe"/>
-            <column name="birthDate" value="1990-01-01"/>
-            <column name="phoneNumber" value="1234567890"/>
+            <column name="first_name" value="John"/>
+            <column name="sur_name" value="Doe"/>
+            <column name="birth_date" value="1990-01-01"/>
+            <column name="phone_number" value="1234567890"/>
             <column name="email" value="john.doe@example.com"/>
             <column name="password" value="hashedpassword1"/>
             <column name="role" value="ADMIN"/>
@@ -98,10 +98,10 @@
         </insert>
 
         <insert tableName="account">
-            <column name="firstname" value="User"/>
-            <column name="surName" value="Smith"/>
-            <column name="birthDate" value="1992-02-02"/>
-            <column name="phoneNumber" value="0987654321"/>
+            <column name="first_name" value="User"/>
+            <column name="sur_name" value="Smith"/>
+            <column name="birth_date" value="1992-02-02"/>
+            <column name="phone_number" value="0987654321"/>
             <column name="email" value="jane.smith@example.com"/>
             <column name="password" value="password"/>
             <column name="role" value="PATIENT"/>
@@ -119,8 +119,8 @@
     <!-- Вставка данных в таблицу doctor_profile -->
     <changeSet id="insert.default.doctor_profile" author="author">
         <insert tableName="doctor_profile">
-            <column name="firstName" value="doctorName1"/>
-            <column name="lastName" value="doctorLastname1"/>
+            <column name="first_name" value="doctorName1"/>
+            <column name="last_name" value="doctorLastname1"/>
             <column name="department_id" value="1"/>
             <column name="specialization" value="Cardiology"/>
             <column name="experienceYears" value="10"/>
