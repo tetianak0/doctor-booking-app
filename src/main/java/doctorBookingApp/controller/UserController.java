@@ -30,9 +30,6 @@
 
 
      //РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ
-     //Контроллер принимает запрос на подтверждение, вызывает метод подтверждения
-     // и возвращает соответствующий ответ.
-
 
      @Operation(summary = "Регистрация нового пользователя")
      @ApiResponses(value = {
@@ -75,23 +72,6 @@
          model.addAttribute("confirmationCode", confirmationCode);
          return "confirm"; // Имя HTML страницы подтверждения
      }
-
-
-
-
-//
-//     @PostMapping("/confirm")
-//     public ResponseEntity<?> confirmUser(@RequestParam String confirmationCode) {
-//         try {
-//             UserDTO userDTO = confirmationCodeService.confirmation(confirmationCode);
-//             return ResponseEntity.ok(userDTO);
-//         } catch (RestException e) {
-//             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Код не найден или срок его действия истек");
-//         }
-//     }
-//
-
-
 
 
      //ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
