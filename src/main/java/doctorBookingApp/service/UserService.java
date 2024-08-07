@@ -34,7 +34,7 @@ public class UserService {
     private final ConfirmationCodeService confirmationCodeService;
     private final PasswordEncoder passwordEncoder;
     
-//    private final MailService mailService;
+    private final MailService mailService;
 
 
     @Transactional
@@ -55,8 +55,8 @@ public class UserService {
                 .build();
         userRepository.save(user);
 
-//        String codeValue = confirmationCodeService.createAndSaveConfirmationCode(user);
-//        mailService.sendConfirmationEmail(user, codeValue);
+       String codeValue = confirmationCodeService.createAndSaveConfirmationCode(user);
+       mailService.sendConfirmationEmail(user, codeValue);
 
         return UserDTO.from(user);
 

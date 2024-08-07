@@ -51,7 +51,7 @@ public class DoctorProfileController {
         return ResponseEntity.ok(doctorProfileService.getAllDoctorProfiles());
     }
 
-    @GetMapping(value="api/department/{departmentId}")
+    @GetMapping(value="/department/{departmentId}")
     public ResponseEntity<List<DoctorProfileDTO>> findByDepartmentId(@PathVariable Long departmentId) {
         return ResponseEntity.ok(doctorProfileService.findByDepartmentId(departmentId));
     }
