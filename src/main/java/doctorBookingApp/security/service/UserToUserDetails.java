@@ -46,6 +46,6 @@ public class UserToUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getState().equals(State.CONFIRMED);
     }
 }
