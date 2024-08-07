@@ -84,7 +84,6 @@
      }
 
 
-
      @Operation(summary = "Обновление информации о пользователе")
      @ApiResponses(value = {
              @ApiResponse(responseCode = "200", description = "Информация о пользователе обновлена.",
