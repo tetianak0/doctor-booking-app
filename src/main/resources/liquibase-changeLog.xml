@@ -81,6 +81,9 @@
             <column name="state" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
+            <column name="confirmation_code" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -95,6 +98,8 @@
             <column name="password" value="hashedpassword1"/>
             <column name="role" value="ADMIN"/>
             <column name="state" value="CONFIRMED"/>
+            <column name="confirmation_code" value="3709-07gbnl-[]y76z"/>
+
         </insert>
 
         <insert tableName="account">
@@ -105,7 +110,8 @@
             <column name="email" value="jane.smith@example.com"/>
             <column name="password" value="password"/>
             <column name="role" value="PATIENT"/>
-            <column name="state" value="CONFIRMED"/>
+            <column name="state" value="NOT_CONFIRMED"/>
+            <column name="confirmation_code" value="3709-07gbnl-[]y76z"/>
         </insert>
     </changeSet>
 
