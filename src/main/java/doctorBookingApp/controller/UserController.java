@@ -21,7 +21,7 @@
 
  @RestController
  @RequiredArgsConstructor
- @RequestMapping("/users")  //все методы в этом классе будут доступны по URL, начинающимся с /users.
+ @RequestMapping("/users")
  public class UserController {
 
      private final UserService userService;
